@@ -1,17 +1,15 @@
-# Use Python base image
 FROM python:3.9-slim
 
-# Set working directory
 WORKDIR /app
 
-# Copy files
 COPY . /app
 
-# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port
+# Create non-root user
+RUN useradd -m appuser
+USER appuser
+
 EXPOSE 8080
 
-# Run application
 CMD ["python", "service/routes.py"]
